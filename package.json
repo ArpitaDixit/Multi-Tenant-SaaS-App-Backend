@@ -1,7 +1,7 @@
 {
   "name": "y",
   "version": "1.0.0",
-  "description": "",
+  "description": "Tenant API for Cmpe281 team project",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -14,5 +14,14 @@
     "express": "^4.15.2",
     "mongoose": "^4.9.5",
     "node-restful": "^0.2.6"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArpitaDixit/Multi-Tenant-SaaS-App-Backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ArpitaDixit/Multi-Tenant-SaaS-App-Backend/issues"
+  },
+  "homepage": "https://github.com/ArpitaDixit/Multi-Tenant-SaaS-App-Backend#readme"
 }

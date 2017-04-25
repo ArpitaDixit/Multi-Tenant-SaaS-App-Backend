@@ -9,6 +9,7 @@ mongoose.connect('mongodb://54.215.245.232/starbucks');
 
 //Express
 var app = express();
+port = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
  
@@ -19,4 +20,7 @@ app.use(bodyParser.json());
  
  //Start server
 //app.listen(3000);
-console.log('Listening on port 3000');
+app.listen(port, function () {
+  console.log('Server running at port: '+port);
+});
+//console.log('Listening on port 3000');

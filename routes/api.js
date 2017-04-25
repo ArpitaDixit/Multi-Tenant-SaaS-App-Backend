@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var uuidV1 = require('uuid/v1');
+var brewCoffee = require('../routes/brewCoffee');
 
 //Models
 var Order = require('../models/order')

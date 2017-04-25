@@ -15,7 +15,7 @@ app.use(bodyParser.json());
  
  //Routes
  app.use('/starbucks/store1',require('./routes/api'));
- app.use('/');
+ app.use('/',require('./routes/api');
 // app.use('/starbucks/store1',require('./routes/pay'));
 
  

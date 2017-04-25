@@ -7,8 +7,7 @@ var brewCoffee = require('../routes/brewCoffee');
 var Order = require('../models/order')
 
 //Routes
-
-router.all('*', function(req, res, next) {
+/*router.all('*', function(req, res, next) {
     // add details of what is allowed in HTTP request headers to the response headers
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
@@ -21,7 +20,7 @@ router.all('*', function(req, res, next) {
 
 router.options('*', function(req, res) {
     res.sendStatus(200);
-});
+});*/
 
 router.post('/order/:id/pay', function(req, res) {
 	var order_id = req.params.id;

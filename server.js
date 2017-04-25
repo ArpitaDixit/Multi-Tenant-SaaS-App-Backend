@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var Order = require('./models/order')
 
 //MongoDB
-mongoose.connect('mongodb://54.219.151.100/starbucks');
+mongoose.connect('mongodb://52.53.240.166/starbucks');
 
 //Express
 var app = express();

@@ -7,6 +7,22 @@ var brewCoffee = require('../routes/brewCoffee');
 var Order = require('../models/order')
 
 //Routes
+
+router.all('*', function(req, res, next) {
+    // add details of what is allowed in HTTP request headers to the response headers
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Credentials', false);
+    res.header('Access-Control-Max-Age', '86400');
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+    // the next() function continues execution and will move onto the requested URL/URI
+    next();
+});
+
+router.options('*', function(req, res) {
+    res.sendStatus(200);
+});
+
 router.post('/order/:id/pay', function(req, res) {
 	var order_id = req.params.id;
 	var upadteOrder = { status : 'PAID',message:'Payment received!' };

@@ -11,10 +11,11 @@ var drink = {
 
 //Schema
 var orderSchema = new mongoose.Schema({
-	Id: {type: String, unique : true, index: true, required : true},
-	Location: String,
-	Drinks : drink,
-	Status: String
+	id: {type: String, unique : true, index: true, required : true},
+	location: String,
+	items : drink,
+	status: String,
+	message: String
 });
 
 //Return router

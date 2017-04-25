@@ -21,22 +21,22 @@ function startbrewing() {
 	    		var Done = 0;
 	    		var newStatus;
 	    		for( i=0; i<orders.length; i++ ) {
-	    			console.log(i);
-	    			if (orders[i].Status === 'PAID' || orders[i].Status === 'PREPARING' || orders[i].Status === 'SERVED') {
-	    				switch(orders[i].Status) {
+	    			//console.log(i);
+	    			if (orders[i].status === 'PAID' || orders[i].status === 'PREPARING' || orders[i].status === 'SERVED') {
+	    				switch(orders[i].status) {
     						case "PAID":
-       							 newStatus = {Status:'PREPARING'};
+       							 newStatus = {status:'PREPARING'};
         						 break;
     						case "PREPARING":
-        						newStatus = {Status:'SERVED'};
+        						newStatus = {status:'SERVED'};
         						break;
     						case "SERVED":
-        						newStatus = {Status:'COLLECTED'};
+        						newStatus = {status:'COLLECTED'};
         						break;
 						}					
-						Order.findOneAndUpdate({Id:orders[i].Id}, newStatus,function(err) {
+						Order.findOneAndUpdate({id:orders[i].id}, newStatus,function(err) {
 							if (err) console.log(err);
-							else {console.log('Updated'); }
+							//else {console.log('Updated'); }
 						});
 						console.log(Done);
 						Done = Done+1;
@@ -61,7 +61,7 @@ function startbrewing() {
 	            startbrewing();
 	        }, 3000);
 		} else {
-			console.log('Stopped brewing');
+			//console.log('Stopped brewing');
 		}
 	});
 }
@@ -69,7 +69,7 @@ function startbrewing() {
 var brewCoffee = function(){
 	if(!brewing) {
 		brewing = 1;
-		console.log('Brewing Cofffees');
+		//console.log('Brewing Cofffees');
 		startbrewing();
 	}
 

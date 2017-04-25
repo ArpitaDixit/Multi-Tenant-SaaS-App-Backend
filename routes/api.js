@@ -5,7 +5,6 @@ var uuidV1 = require('uuid/v1');
 
 //Models
 var Order = require('../models/order')
-
 function genRandomId() {
     return uuidV1();
 }
@@ -13,32 +12,51 @@ function genRandomId() {
 //Routes
 router.get('/order/:id', function(req, res) {
 	var order_id = req.params.id;
-	var order = Order.find({Id:order_id}, function (err, post) {
-			if(err) console.log(err);
-			//console.log(req.body);
-    		return res.json(post);
+	var order = Order.find({id:order_id}, function (err, post) {
+			if(err) {
+				var status = '{"status":"error","message":"Server Error, Try Again Later."}';
+				res.json(JSON.parse(status));
+			}
+			else{
+				if(post.length==0){
+					console.log('here');
+					var status = '{"status":"error","message":"Order not found."}';
+					res.json(JSON.parse(status));
+				}
+				else{return res.json(post[0]);}
+			}	   		
   });	
 });
 
 router.get('/orders', function(req, res) {
-	var order = Order.find(req.params.id, function (err, post) {
-			if (err) return next(err);
-			//console.log(req.body);
-    		return res.json(post);
+	var order = Order.find(function (err, post) {
+			if(err) {
+				console.log(err);
+				var status = '{"status":"error","message":"Server Error, Try Again Later."}';
+				res.json(JSON.parse(status));
+			}
+			else{
+				 res.json(post);
+			}
   });	
 });
 
 router.post('/order',function(req, res){
-	var randId = genRandomId();
+	var order_id = genRandomId();
 	var ordered = Order({	
-					Id : randId,
-					Location: req.body.Location,
-					Drinks : {qty:req.body.Drinks.qty, name:req.body.Drinks.name, milk:req.body.Drinks.milk, size:req.body.Drinks.size}, 
-					Status : 'PLACED'
+					id : order_id,
+					location: req.body.location,
+					items : {qty:req.body.items.qty, name:req.body.items.name, milk:req.body.items.milk, size:req.body.items.size}, 
+					message : 'Order has been placed.',
+					status : 'PLACED'
 					});
 	console.log(ordered);
 	ordered.save(function(err){
-		if(err) console.log(err);
+		if(err) {
+			console.log(err);
+			var staus = '{"status":"error","message":"Server Error, Try Again Later."}';
+			res.json(JSON.parse(status));
+		}
 		else{
 			res.json(ordered);
 		}
@@ -47,35 +65,78 @@ router.post('/order',function(req, res){
 
 router.delete('/order/:id', function(req, res) {
 	var order_id = req.params.id;
-	Order.remove({Id:order_id}, function (err, post) {
-			if(err) console.log(err);
-			//console.log(req.body);
-    		else{
-    					console.log('Delete Success');
-    					res.json(post);
-    				}
-    			});
-    		//}
- // });	
+	var order = Order.findOne({id:order_id}, function (err, post) {
+			if(err) {
+				var staus = '{"status":"error","message":"Invalid Order Id."}';
+				res.json(JSON.parse(status));
+			}
+			else{
+				console.log(post);
+				console.log(post.status);
+				if(post.length===0){
+					var status = '{"status":"error","message":"No Order to Cancel."}';
+					res.json(JSON.parse(status));
+				}
+				else if(post.status !=='PLACED'){
+					var status = '{"status":"error","message":"Cannot cancel Order."}';
+					res.json(JSON.parse(status));
+				}
+				else{
+				 	Order.remove({id:order_id}, function (err, post) {
+					 if(err) {
+					var staus = '{"status":"error","message":"Error cancelling Order."}';
+					res.json(JSON.parse(status));
+					}
+					else
+					{				 
+					var status = '{"status":"success","message":"Order successfully cancelled."}';
+				 	res.json(JSON.parse(status));
+				 	}
+    				});
+				}
+    		}
+ 	});
+
 }); 
 
 router.put('/order/:id', function(req, res) {
 	var order_id = req.params.id;
-	Order.findOneAndUpdate({Id:order_id}, req.body, function (err, post) {
-			if(err) console.log(err);
-			//console.log(req.body);
-    		else{
-    			/*order.delete(function(err)
-    			{
-    				if(err) console.log(err);
-    				else{*/
-    					console.log('Update Success');
-    					res.json(post);
-    				}
-    			});
-    		//}
- // });	
-});
+	var order = Order.findOne({id:order_id}, function (err, post) {
+			if(err) {
+				var staus = '{"status":"error","message":"Invalid Order Id."}';
+				res.json(JSON.parse(status));
+			}
+			else{
+					if(post ===null){
+						var status = '{"status":"error","message":"Order not found."}';
+						res.json(JSON.parse(status));
+					}
+					else if(post.status !=='PLACED'){
+						var status = '{"status":"error","message":"Order update rejected."}';
+						res.json(JSON.parse(status));
+					}
+					else{
+						Order.findOneAndUpdate({id:order_id}, req.body, function (err, post) {
+						if(err) {
+							var staus = '{"status":"error","message":"Server Error, Try Again Later."}';
+							res.json(JSON.parse(status));
+						}
+    					else{
+    						var order = Order.findOne({id:order_id}, function (err, post) {
+							if(err) {
+								var staus = '{"status":"error","message":"Invalid Order Id."}';
+								res.json(JSON.parse(status));
+							}
+							else{
+								res.json(post);
+							}
+							});
+    						}
+    					});
+				}
+    		}
+ });
+}); 
 //Order.methods(['get','put','post','delete']);
 //Order.register(router,'/orders');
 

@@ -28,7 +28,7 @@ router.all('*', function(req, res, next) {
     next();
 });
 
-router.options('*', function(req, res) {
+router.options('*', cors(), function(req, res) {
     res.sendStatus(200);
 });
 

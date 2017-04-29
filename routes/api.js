@@ -67,9 +67,11 @@ router.get('/orders', function(req, res) {
 
 router.post('/order',function(req, res){
 	var order_id = genRandomId();
+	var obj = JSON.parse(req.body);
+	console.log(obj);
 	console.log(req.body);
-	console.log(req.param('items'));
-	console.log(req.param('items')[0].qty);
+	//console.log(req.param('items'));
+	//console.log(req.param('items')[0].qty);
 	//console.log(req.param('items'));
 	console.log("**********************");
 	//console.log(req.params.items[0]);

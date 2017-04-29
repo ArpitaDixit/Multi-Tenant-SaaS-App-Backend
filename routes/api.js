@@ -70,7 +70,12 @@ router.get('/orders', function(req, res) {
 
 router.post('/order',function(req, res){
 	var order_id = genRandomId();
-	console.log(req);
+	console.log(req.body);
+	console.log("**********************");
+	//console.log(req.params.items[0]);
+	//console.log(req.query.('items[0]');
+	console.log(req.body.location);
+	//console.log(JSON.parse(req.body));
 	var ordered = Order({	
 					id : order_id,
 					location: req.body.location,
@@ -86,11 +91,6 @@ router.post('/order',function(req, res){
 			res.json(JSON.parse(status));
 		}
 		else{
-			res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Credentials', false);
-    res.header('Access-Control-Max-Age', '86400');
-    res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
 			res.json(ordered);
 		}
 	});

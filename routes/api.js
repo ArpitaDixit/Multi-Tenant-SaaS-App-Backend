@@ -15,23 +15,20 @@ function genRandomId() {
 
 router.get('/',function(req, res){
 	res.header('Access-Control-Allow-Origin', '*');
-	res.send("Health check successful!");
+	res.send("Ping successful!");
 });
 
 router.all('*', function(req, res, next) {
-	//res.addHeader()
-    // add details of what is allowed in HTTP request headers to the response headers
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Credentials', false);
     res.header('Access-Control-Max-Age', '86400');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
     res.header('Access-Control-Allow-Headers', req.header.origin);
-    // the next() function continues execution and will move onto the requested URL/URI
     next();
 });
 
-router.options('*', cors(), function(req, res) {
+router.options('*', function(req, res) {
     res.sendStatus(200);
 });
 
@@ -56,7 +53,7 @@ router.get('/order/:id', function(req, res) {
 
 
 router.get('/orders', function(req, res) {
-	var order = Order.find(function (err, post) {
+	var order = Order.find({},{'_id': 0,'__v': 0}, function (err, post) {
 			if(err) {
 				console.log(err);
 				var status = '{"status":"error","message":"Server Error, Try Again Later."}';
@@ -71,15 +68,18 @@ router.get('/orders', function(req, res) {
 router.post('/order',function(req, res){
 	var order_id = genRandomId();
 	console.log(req.body);
+	console.log(req.param('items'));
+	console.log(req.param('items')[0].qty);
+	//console.log(req.param('items'));
 	console.log("**********************");
 	//console.log(req.params.items[0]);
-	//console.log(req.query.('items[0]');
-	console.log(req.body.location);
+	console.log(req.body.items[0].qty);
+	//console.log(req.params.location);
 	//console.log(JSON.parse(req.body));
 	var ordered = Order({	
 					id : order_id,
-					location: req.body.location,
-					items : {qty:req.body.items[0].qty, name:req.body.items[0].name, milk:req.body.items[0].milk, size:req.body.items[0].size}, 
+					location: req.param('location'),
+					items : {qty:req.param('items')[0].qty, name:req.param('items')[0].name, milk:req.param('items')[0].milk, size:req.param('items')[0].size}, 
 					message : 'Order has been placed.',
 					status : 'PLACED'
 					});

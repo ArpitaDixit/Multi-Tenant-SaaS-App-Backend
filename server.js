@@ -13,7 +13,6 @@ var app = express();
 port = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(bodyParser.json({ type: 'application/vnd.api+json' })); 
 app.use(morgan('tiny'));
 
 app.use(function(req, res, next) {
@@ -25,7 +24,7 @@ app.use(function(req, res, next) {
 
  //Routes
  app.use('/starbucks/store1',require('./routes/api'));
- app.use('/',require('./routes/api'));
+ //app.use('/',require('./routes/api'));
 // app.use('/starbucks/store1',require('./routes/pay'));
 
  

@@ -6,7 +6,7 @@ var morgan = require('morgan')
 var Order = require('./models/order')
 
 //MongoDB
-mongoose.connect('mongodb://localhost/starbucks');
+mongoose.connect('mongodb://54.215.212.217/starbucks');
 
 //Express
 var app = express();

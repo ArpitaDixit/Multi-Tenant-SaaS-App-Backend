@@ -70,6 +70,7 @@ router.get('/orders', function(req, res) {
 
 router.post('/order',function(req, res){
 	var order_id = genRandomId();
+	console.log(req);
 	var ordered = Order({	
 					id : order_id,
 					location: req.body.location,

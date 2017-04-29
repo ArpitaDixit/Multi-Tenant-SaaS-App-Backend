@@ -67,7 +67,7 @@ router.get('/orders', function(req, res) {
 
 router.post('/order',function(req, res){
 	var order_id = genRandomId();
-	var obj = JSON.parse(req.body);
+	var obj = JSON.parse(JSON.stringify(req.body));
 	console.log(obj);
 	console.log(req.body);
 	//console.log(req.param('items'));
@@ -80,8 +80,8 @@ router.post('/order',function(req, res){
 	//console.log(JSON.parse(req.body));
 	var ordered = Order({	
 					id : order_id,
-					location: req.param('location'),
-					items : {qty:req.param('items')[0].qty, name:req.param('items')[0].name, milk:req.param('items')[0].milk, size:req.param('items')[0].size}, 
+					location: obj.location,
+					items : {qty:obj.items[0].qty, name:obj.items[0].name, milk:obj.items[0].milk, size:obj.items[0].size}, 
 					message : 'Order has been placed.',
 					status : 'PLACED'
 					});

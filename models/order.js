@@ -3,7 +3,7 @@ var restful = require('node-restful');
 var mongoose = restful.mongoose;
 
 var drink = {
-	qty: Number,
+	qty: String,
 	name: String,
 	milk: String,
 	size: String

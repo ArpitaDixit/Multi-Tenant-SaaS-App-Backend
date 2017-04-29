@@ -38,7 +38,7 @@ router.options('*', cors(), function(req, res) {
 
 router.get('/order/:id', function(req, res) {
 	var order_id = req.params.id;
-	var order = Order.find({id:order_id}, function (err, post) {
+	var order = Order.find({id:order_id}, {'_id': 0,'__v': 0}, function (err, post) {
 			if(err) {
 				var status = '{"status":"error","message":"Server Error, Try Again Later."}';
 				res.json(JSON.parse(status));
@@ -53,6 +53,7 @@ router.get('/order/:id', function(req, res) {
 			}	   		
   });	
 });
+
 
 router.get('/orders', function(req, res) {
 	var order = Order.find(function (err, post) {
@@ -72,7 +73,7 @@ router.post('/order',function(req, res){
 	var ordered = Order({	
 					id : order_id,
 					location: req.body.location,
-					items : {qty:req.body.items.qty, name:req.body.items.name, milk:req.body.items.milk, size:req.body.items.size}, 
+					items : {qty:req.body.items[0].qty, name:req.body.items[0].name, milk:req.body.items[0].milk, size:req.body.items[0].size}, 
 					message : 'Order has been placed.',
 					status : 'PLACED'
 					});
@@ -96,7 +97,7 @@ router.post('/order',function(req, res){
 
 router.delete('/order/:id', function(req, res) {
 	var order_id = req.params.id;
-	var order = Order.findOne({id:order_id}, function (err, post) {
+	var order = Order.findOne({id:order_id}, {'_id': 0,'__v': 0},function (err, post) {
 			if(err) {
 				var staus = '{"status":"error","message":"Invalid Order Id."}';
 				res.json(JSON.parse(status));
@@ -132,7 +133,7 @@ router.delete('/order/:id', function(req, res) {
 
 router.put('/order/:id', function(req, res) {
 	var order_id = req.params.id;
-	var order = Order.findOne({id:order_id}, function (err, post) {
+	var order = Order.findOne({id:order_id}, {'_id':0,'__v':0}, function (err, post) {
 			if(err) {
 				var staus = '{"status":"error","message":"Invalid Order Id."}';
 				res.json(JSON.parse(status));
@@ -172,7 +173,7 @@ router.put('/order/:id', function(req, res) {
 router.post('/order/:id/pay', function(req, res) {
 	var order_id = req.params.id;
 	var upadteOrder = { status : 'PAID',message:'Payment received!' };
-		Order.findOne({id:order_id}, function (err, post) {
+		Order.findOne({id:order_id}, {'_id': 0,'__v': 0}, function (err, post) {
 			if (err) {
 				var status = '{"status":"error","message":"Order Payment Rejected."}';
 				res.json(JSON.parse(status));
@@ -190,7 +191,7 @@ router.post('/order/:id/pay', function(req, res) {
 						if (err) console.log(err);
 						else{
 
-							Order.findOne({id:order_id}, function (err, post) {
+							Order.findOne({id:order_id}, {'_id': 0,'__v': 0},function (err, post) {
 							if (err) {
 							var status = '{"status":"error","message":"Order Payment Rejected."}';
 							res.json(JSON.parse(status));

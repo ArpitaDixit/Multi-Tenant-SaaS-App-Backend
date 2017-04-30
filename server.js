@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var morgan = require('morgan')
 var Order = require('./models/order')
+var cors = require('cors');
 
 //MongoDB
 mongoose.connect('mongodb://54.215.212.217/starbucks');
@@ -14,6 +15,7 @@ port = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
+app.use(cors());
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -24,7 +26,6 @@ app.use(function(req, res, next) {
 
  //Routes
  app.use('/starbucks/store1',require('./routes/api'));
- //app.use('/',require('./routes/api'));
 // app.use('/starbucks/store1',require('./routes/pay'));
 
  

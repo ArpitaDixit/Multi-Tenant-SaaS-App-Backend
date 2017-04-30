@@ -81,7 +81,7 @@ router.post('/order',function(req, res){
 	var ordered = Order({	
 					id : order_id,
 					location: obj.location,
-					items : {qty:obj.items[0].qty, name:obj.items[0].name, milk:obj.items[0].milk, size:obj.items[0].size}, 
+					items : [{qty:obj.items[0].qty, name:obj.items[0].name, milk:obj.items[0].milk, size:obj.items[0].size}], 
 					message : 'Order has been placed.',
 					status : 'PLACED'
 					});

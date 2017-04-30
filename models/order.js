@@ -1,6 +1,7 @@
 //Dependencies
-var restful = require('node-restful');
-var mongoose = restful.mongoose;
+//var restful = require('node-restful');
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 var drink = {
 	qty: String,
@@ -10,7 +11,7 @@ var drink = {
 }
 
 //Schema
-var orderSchema = new mongoose.Schema({
+var orderSchema = Schema({
 	id: {type: String, unique : true, index: true, required : true},
 	location: String,
 	items: drink =[],
@@ -18,5 +19,7 @@ var orderSchema = new mongoose.Schema({
 	message: String
 });
 
+var Order = mongoose.model('Order', orderSchema);
+
 //Return router
-module.exports = restful.model('orders',orderSchema);
+module.exports = Order;

@@ -14,7 +14,7 @@ var drink = {
 var orderSchema = Schema({
 	id: {type: String, unique : true, index: true, required : true},
 	location: String,
-	items: drink ,
+	items: drink =[],
 	status: String,
 	message: String
 });

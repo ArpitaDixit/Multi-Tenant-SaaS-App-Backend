@@ -7,7 +7,7 @@ var Order = require('./models/order')
 var cors = require('cors');
 
 //MongoDB
-mongoose.connect('mongodb://54.215.216.108/starbucks');
+mongoose.connect('mongodb://52.53.201.223/starbucks');
 
 //Express
 var app = express();

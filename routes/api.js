@@ -80,7 +80,7 @@ router.post('/order',function(req, res){
 	//console.log(JSON.parse(req.body));
 	var ordered = Order({	
 					id : order_id,
-					location: 'store-1',
+					location: 'store-2',
 					items : [{qty:'3', name:'Mocha', milk:'2%', size:'Large'}], 
 					message : 'Order has been placed.',
 					status : 'PLACED'
